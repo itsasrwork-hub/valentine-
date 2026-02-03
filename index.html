@@ -24,6 +24,7 @@ body{
   font-size:20px;
   animation:floatUp 6s linear infinite;
   opacity:0.8;
+  z-index:1;
 }
 @keyframes floatUp{
   from{transform:translateY(0);opacity:1}
@@ -39,7 +40,7 @@ body{
   border-radius:22px;
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,0.3);
-  z-index:2;
+  z-index:5;
 }
 
 /* ✨ Glowing name */
@@ -69,13 +70,14 @@ button{
   color:white;
 }
 
-/* 😈 NO button */
+/* 😈 NO button (FIXED VISIBILITY) */
 #no{
   position:fixed;
   background:#eee;
   top:70%;
   left:50%;
   transition:top 0.4s ease-out,left 0.4s ease-out;
+  z-index:30; /* 👈 always on top */
 }
 
 /* NICE TRY text */
@@ -89,7 +91,7 @@ button{
   border-radius:20px;
   opacity:0;
   transition:opacity 0.3s;
-  z-index:5;
+  z-index:35; /* 👈 above NO button */
 }
 
 /* Popup */
@@ -100,7 +102,7 @@ button{
   display:none;
   justify-content:center;
   align-items:center;
-  z-index:10;
+  z-index:50;
 }
 
 .popup-box{
@@ -147,8 +149,8 @@ button{
   position:fixed;
   width:8px;
   height:8px;
-  background:red;
   animation:fall 3s linear forwards;
+  z-index:40;
 }
 @keyframes fall{
   from{transform:translateY(-10px)}
@@ -160,6 +162,7 @@ button{
   position:fixed;
   font-size:22px;
   animation:fire 1.2s ease-out forwards;
+  z-index:45;
 }
 @keyframes fire{
   from{transform:scale(0.5);opacity:1}
