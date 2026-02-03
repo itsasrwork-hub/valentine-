@@ -113,14 +113,21 @@ function moveNo(e){
   e.preventDefault();
 
   const btn = document.getElementById("no");
-  const maxX = window.innerWidth - btn.offsetWidth;
-  const maxY = window.innerHeight - btn.offsetHeight;
+  const rect = btn.getBoundingClientRect();
 
-  const x = Math.random() * maxX;
-  const y = Math.random() * maxY;
+  // move a short distance away
+  let dx = (Math.random() > 0.5 ? 1 : -1) * 120;
+  let dy = (Math.random() > 0.5 ? 1 : -1) * 120;
 
-  btn.style.left = x + "px";
-  btn.style.top = y + "px";
+  let newX = rect.left + dx;
+  let newY = rect.top + dy;
+
+  // keep inside screen
+  newX = Math.max(10, Math.min(window.innerWidth - btn.offsetWidth - 10, newX));
+  newY = Math.max(10, Math.min(window.innerHeight - btn.offsetHeight - 10, newY));
+
+  btn.style.left = newX + "px";
+  btn.style.top = newY + "px";
 }
 
 document.getElementById("yes").addEventListener("click", ()=>{
@@ -130,4 +137,5 @@ document.getElementById("yes").addEventListener("click", ()=>{
 
 </body>
 </html>
+
 
