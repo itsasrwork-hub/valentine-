@@ -9,7 +9,7 @@
 body{
   margin:0;
   height:100vh;
-  background:#ffdde5;
+  background:linear-gradient(135deg,#ff5f8f,#ff9a9e);
   font-family:Arial, sans-serif;
   display:flex;
   justify-content:center;
@@ -17,29 +17,51 @@ body{
   overflow:hidden;
 }
 
+/* 🌸 Floating hearts background */
+.heart-bg{
+  position:absolute;
+  bottom:-20px;
+  font-size:20px;
+  animation:floatUp 6s linear infinite;
+  opacity:0.8;
+}
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-110vh);opacity:0}
+}
+
+/* Card */
 .card{
   background:white;
   padding:25px;
   width:90%;
-  max-width:350px;
-  border-radius:20px;
+  max-width:360px;
+  border-radius:22px;
   text-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  box-shadow:0 15px 40px rgba(0,0,0,0.3);
+  z-index:2;
 }
 
+/* ✨ Glowing name */
 .name{
   font-size:26px;
   font-weight:bold;
   color:#ff2f6e;
+  animation:glow 2s infinite alternate;
+}
+@keyframes glow{
+  from{text-shadow:0 0 5px #ff2f6e}
+  to{text-shadow:0 0 25px #ff6f91}
 }
 
+h2{color:#ff2f6e}
+
 button{
-  padding:12px 30px;
+  padding:12px 34px;
   font-size:18px;
   border:none;
   border-radius:30px;
-  touch-action:none;     /* IMPORTANT */
-  user-select:none;
+  touch-action:none;
 }
 
 #yes{
@@ -47,40 +69,101 @@ button{
   color:white;
 }
 
+/* 😈 NO button */
 #no{
   position:fixed;
-  background:#ddd;
+  background:#eee;
   top:70%;
   left:50%;
-  transition: top 0.4s ease-out, left 0.4s ease-out;
+  transition:top 0.4s ease-out,left 0.4s ease-out;
 }
 
+/* NICE TRY text */
+.try{
+  position:fixed;
+  font-size:16px;
+  font-weight:bold;
+  color:#fff;
+  background:#ff2f6e;
+  padding:6px 12px;
+  border-radius:20px;
+  opacity:0;
+  transition:opacity 0.3s;
+  z-index:5;
+}
+
+/* Popup */
 .popup{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.65);
   display:none;
   justify-content:center;
   align-items:center;
+  z-index:10;
 }
 
 .popup-box{
   background:white;
-  padding:20px;
-  border-radius:20px;
+  padding:22px;
+  border-radius:22px;
   width:85%;
-  max-width:320px;
+  max-width:330px;
   text-align:center;
+  animation:zoom 0.9s ease;
+}
+@keyframes zoom{
+  from{transform:scale(0.7);opacity:0}
+  to{transform:scale(1);opacity:1}
 }
 
 .popup-box img{
   width:100%;
-  border-radius:15px;
+  border-radius:18px;
+  margin-top:10px;
 }
 
-.love{
+/* Love lines */
+.main-line{
+  margin-top:10px;
+  font-size:18px;
+  font-weight:bold;
+  color:#ff2f6e;
+}
+.memory{
+  margin-top:6px;
+  font-size:15px;
+  color:#333;
+}
+.date{
+  margin-top:6px;
+  font-size:14px;
   color:#ff2f6e;
   font-weight:bold;
+}
+
+/* 🎉 Confetti */
+.confetti{
+  position:fixed;
+  width:8px;
+  height:8px;
+  background:red;
+  animation:fall 3s linear forwards;
+}
+@keyframes fall{
+  from{transform:translateY(-10px)}
+  to{transform:translateY(110vh)}
+}
+
+/* ❤️ Firework hearts */
+.fire{
+  position:fixed;
+  font-size:22px;
+  animation:fire 1.2s ease-out forwards;
+}
+@keyframes fire{
+  from{transform:scale(0.5);opacity:1}
+  to{transform:scale(2.5);opacity:0}
 }
 </style>
 </head>
@@ -94,48 +177,89 @@ button{
 </div>
 
 <button id="no"
-  ontouchstart="moveNo(event)"
-  ontouchmove="moveNo(event)"
-  onclick="moveNo(event)">
-  NO
-</button>
+ ontouchstart="moveNo(event)"
+ ontouchmove="moveNo(event)"
+ onclick="moveNo(event)">NO</button>
+
+<div class="try" id="try">NICE TRY 😂😂</div>
 
 <div class="popup" id="popup">
   <div class="popup-box">
     <h2>YAY ✨</h2>
     <img src="us.jpg">
-    <p class="love">Forever Us ❤️</p>
+    <div class="main-line">FROM TODAY ....TO FOREVER ❤️</div>
+    <div class="memory">BEST THING THAT EVER HAPPENED TO ME🧿♥️</div>
+    <div class="date">♥️12 APRIL 2024♥️</div>
   </div>
 </div>
 
 <script>
+/* Floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart-bg";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"%";
+  h.style.fontSize=14+Math.random()*20+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},350);
+
+/* NO escape */
 function moveNo(e){
   e.preventDefault();
+  const btn=document.getElementById("no");
+  const t=document.getElementById("try");
+  const r=btn.getBoundingClientRect();
 
-  const btn = document.getElementById("no");
-  const rect = btn.getBoundingClientRect();
+  let dx=(Math.random()>0.5?1:-1)*120;
+  let dy=(Math.random()>0.5?1:-1)*120;
 
-  // move a short distance away
-  let dx = (Math.random() > 0.5 ? 1 : -1) * 120;
-  let dy = (Math.random() > 0.5 ? 1 : -1) * 120;
+  let x=r.left+dx;
+  let y=r.top+dy;
 
-  let newX = rect.left + dx;
-  let newY = rect.top + dy;
+  x=Math.max(10,Math.min(window.innerWidth-btn.offsetWidth-10,x));
+  y=Math.max(10,Math.min(window.innerHeight-btn.offsetHeight-10,y));
 
-  // keep inside screen
-  newX = Math.max(10, Math.min(window.innerWidth - btn.offsetWidth - 10, newX));
-  newY = Math.max(10, Math.min(window.innerHeight - btn.offsetHeight - 10, newY));
+  btn.style.left=x+"px";
+  btn.style.top=y+"px";
 
-  btn.style.left = newX + "px";
-  btn.style.top = newY + "px";
+  t.style.left=x+"px";
+  t.style.top=(y-40)+"px";
+  t.style.opacity=1;
+  setTimeout(()=>t.style.opacity=0,600);
 }
 
-document.getElementById("yes").addEventListener("click", ()=>{
-  document.getElementById("popup").style.display = "flex";
-});
+/* YES celebration */
+document.getElementById("yes").onclick=()=>{
+  document.getElementById("popup").style.display="flex";
+  confetti();
+  firework();
+};
+
+function confetti(){
+  for(let i=0;i<40;i++){
+    const c=document.createElement("div");
+    c.className="confetti";
+    c.style.left=Math.random()*100+"%";
+    c.style.background=["#ff2f6e","#ffd166","#06d6a0"][Math.floor(Math.random()*3)];
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3000);
+  }
+}
+
+function firework(){
+  for(let i=0;i<12;i++){
+    const f=document.createElement("div");
+    f.className="fire";
+    f.innerHTML="❤️";
+    f.style.left=50+Math.random()*20-10+"%";
+    f.style.top=50+Math.random()*20-10+"%";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1200);
+  }
+}
 </script>
 
 </body>
 </html>
-
-
