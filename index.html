@@ -169,8 +169,8 @@ button{
   to{transform:scale(2.5);opacity:0}
 }
 
-/* Hidden YouTube audio */
-#yt-player{
+/* Hidden player */
+#player{
   position:fixed;
   width:1px;
   height:1px;
@@ -205,14 +205,30 @@ button{
   </div>
 </div>
 
-<!-- 🎵 A Thousand Years (chorus starts at 1:05) -->
-<iframe
-  id="yt-player"
-  src="https://www.youtube.com/embed/rtOvBOTyX00?enablejsapi=1&start=65"
-  allow="autoplay; encrypted-media">
-</iframe>
+<!-- YouTube Player Container -->
+<div id="player"></div>
+
+<!-- YouTube API -->
+<script src="https://www.youtube.com/iframe_api"></script>
 
 <script>
+let ytPlayer;
+
+/* Create player */
+function onYouTubeIframeAPIReady(){
+  ytPlayer = new YT.Player('player', {
+    height: '1',
+    width: '1',
+    videoId: 'rtOvBOTyX00', // A Thousand Years
+    playerVars: {
+      start: 65, // chorus
+      controls: 0,
+      disablekb: 1,
+      modestbranding: 1
+    }
+  });
+}
+
 /* Floating hearts */
 setInterval(()=>{
   const h=document.createElement("div");
@@ -254,7 +270,7 @@ document.getElementById("yes").onclick=()=>{
   document.getElementById("popup").style.display="flex";
   confetti();
   firework();
-  playSong();
+  if(ytPlayer) ytPlayer.playVideo(); // 🔥 THIS NOW WORKS
 };
 
 /* Confetti */
@@ -280,12 +296,6 @@ function firework(){
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1200);
   }
-}
-
-/* Play song */
-function playSong(){
-  const iframe=document.getElementById("yt-player").contentWindow;
-  iframe.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
 }
 </script>
 
