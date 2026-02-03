@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine 💖</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:#ffdde5;
+  font-family:Arial, sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+}
+.card{
+  background:white;
+  padding:25px;
+  width:90%;
+  max-width:350px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+}
+.name{
+  font-size:26px;
+  font-weight:bold;
+  color:#ff2f6e;
+}
+button{
+  padding:12px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:30px;
+}
+#yes{
+  background:#ff2f6e;
+  color:white;
+}
+#no{
+  position:fixed;
+  background:#ddd;
+  top:65%;
+  left:50%;
+}
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+}
+.popup-box{
+  background:white;
+  padding:20px;
+  border-radius:20px;
+  width:85%;
+  max-width:320px;
+  text-align:center;
+}
+.popup-box img{
+  width:100%;
+  border-radius:15px;
+}
+.love{
+  color:#ff2f6e;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="name">NIKKI</div>
+  <h2>Will you be my Valentine? 💖</h2>
+  <button id="yes">YES</button>
+</div>
+
+<button id="no">NO</button>
