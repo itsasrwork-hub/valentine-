@@ -169,7 +169,7 @@ button{
   to{transform:scale(2.5);opacity:0}
 }
 
-/* Hidden YouTube player */
+/* Hidden YouTube audio */
 #yt-player{
   position:fixed;
   width:1px;
@@ -205,10 +205,10 @@ button{
   </div>
 </div>
 
-<!-- Hidden YouTube Audio (Tum Se Hi) -->
+<!-- 🎵 A Thousand Years (chorus starts at 1:05) -->
 <iframe
   id="yt-player"
-  src="https://www.youtube.com/embed/2Vv-BfVoq4g?enablejsapi=1"
+  src="https://www.youtube.com/embed/rtOvBOTyX00?enablejsapi=1&start=65"
   allow="autoplay; encrypted-media">
 </iframe>
 
@@ -282,7 +282,7 @@ function firework(){
   }
 }
 
-/* Play YouTube audio only */
+/* Play song */
 function playSong(){
   const iframe=document.getElementById("yt-player").contentWindow;
   iframe.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
